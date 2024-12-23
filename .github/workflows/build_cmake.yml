@@ -32,11 +32,6 @@ jobs:
             os: ubuntu-latest,
             cc: "gcc-10", cxx: "g++-10"
           }
-        - {
-            name: "macOS Latest Clang", artifact: "macOS-x64",
-            os: macos-latest,
-            cc: "clang", cxx: "clang++"
-          }
 
     steps:
     - name: Checkout
@@ -65,10 +60,6 @@ jobs:
           set(ninja_suffix "linux.zip")
           set(cmake_suffix "Linux-x86_64.tar.gz")
           set(cmake_dir "cmake-${cmake_version}-Linux-x86_64/bin")
-        elseif ("${{ runner.os }}" STREQUAL "macOS")
-          set(ninja_suffix "mac.zip")
-          set(cmake_suffix "Darwin-x86_64.tar.gz")
-          set(cmake_dir "cmake-${cmake_version}-Darwin-x86_64/CMake.app/Contents/bin")
         endif()
 
         set(ninja_url "https://github.com/ninja-build/ninja/releases/download/v${ninja_version}/ninja-${ninja_suffix}")
@@ -131,16 +122,6 @@ jobs:
             set(qt_package_suffix "-Linux-RHEL_7_6-GCC-Linux-RHEL_7_6-X86_64")
           else()
             set(qt_package_suffix "-Linux-RHEL_8_4-GCC-Linux-RHEL_8_4-X86_64")
-          endif()
-        elseif ("${{ runner.os }}" STREQUAL "macOS")
-          set(url_os "mac_x64")
-          set(qt_package_arch_suffix "clang_64")
-          if("${qt_version_major}" STREQUAL "5")
-            set(qt_dir_prefix "${qt_version}/clang_64")
-            set(qt_package_suffix "-MacOS-MacOS_10_13-Clang-MacOS-MacOS_10_13-X86_64")
-          else()
-            set(qt_dir_prefix "${qt_version}/macos")
-            set(qt_package_suffix "-MacOS-MacOS_12-Clang-MacOS-MacOS_12-X86_64-ARM64")
           endif()
         endif()
 
